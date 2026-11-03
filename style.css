@@ -30,6 +30,11 @@ a{color:inherit}
 nav{display:flex;gap:26px;align-items:center}
 nav a{text-decoration:none;font-weight:500;color:var(--ink-soft);font-size:.95rem}
 nav a:hover{color:var(--navy)}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:.25s}
+.nav-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-open .nav-toggle span:nth-child(2){opacity:0}
+.nav-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
 /* hero */
 .hero{background:linear-gradient(160deg,var(--navy) 0%,var(--navy-deep) 100%);color:#fff;padding:88px 0}
@@ -138,9 +143,12 @@ nav a:hover{color:var(--navy)}
   .hero{padding:56px 0}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .logo-grid{grid-template-columns:repeat(3,1fr)}
-  nav a{display:none}
-  nav .btn{display:inline-block}
   .bubbles{position:static;display:grid;gap:34px;min-height:0}
   .bubble{position:static;max-width:100%}
   .brand-tag{display:none}
+  .nav-toggle{display:flex}
+  nav{position:fixed;top:76px;left:0;right:0;background:#fff;flex-direction:column;align-items:stretch;gap:0;padding:8px 24px 20px;border-bottom:1px solid var(--line);box-shadow:0 16px 30px rgba(8,21,39,.12);transform:translateY(-12px);opacity:0;pointer-events:none;transition:.25s;z-index:49}
+  .nav-open nav{transform:none;opacity:1;pointer-events:auto}
+  nav a{display:block;padding:13px 4px;border-bottom:1px solid var(--line);font-size:1rem}
+  nav a:last-child{border-bottom:none;margin-top:10px;text-align:center}
 }

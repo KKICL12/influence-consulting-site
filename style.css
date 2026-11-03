@@ -152,3 +152,28 @@ nav a:hover{color:var(--navy)}
   nav a{display:block;padding:13px 4px;border-bottom:1px solid var(--line);font-size:1rem}
   nav a:last-child{border-bottom:none;margin-top:10px;text-align:center}
 }
+
+/* Client logo marquees — continuous right-to-left scroll, mirroring the original site's carousels */
+.logo-marquee{overflow:hidden;position:relative;width:100%}
+.logo-marquee::before,.logo-marquee::after{content:"";position:absolute;top:0;bottom:0;width:48px;z-index:2;pointer-events:none}
+.logo-marquee::before{left:0;background:linear-gradient(to right,#fff,rgba(255,255,255,0))}
+.logo-marquee::after{right:0;background:linear-gradient(to left,#fff,rgba(255,255,255,0))}
+.logo-track{display:flex;gap:14px;width:max-content;animation:logo-scroll 40s linear infinite}
+.logo-marquee:hover .logo-track{animation-play-state:paused}
+@keyframes logo-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion: reduce){.logo-track{animation:none;flex-wrap:wrap;width:100%}}
+
+/* Client feedback — auto-advancing right-to-left carousel (desktop), mirrors the original site */
+@media (min-width:901px){
+  .bubbles{display:flex;align-items:center;justify-content:center;min-height:300px}
+  .bubble{position:absolute;left:50%;top:50%;max-width:560px;opacity:0;transform:translate(-40%,-50%) translateX(70px);pointer-events:none;transition:opacity .55s ease,transform .55s ease}
+  .bubble.active{opacity:1;transform:translate(-50%,-50%);pointer-events:auto}
+  .bubble.leaving{opacity:0;transform:translate(-60%,-50%) translateX(-70px)}
+  .bubble-dots{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);display:flex;gap:9px}
+  .bubble-dots button{width:10px;height:10px;border-radius:50%;border:none;background:#cfd6df;cursor:pointer;padding:0;transition:.25s}
+  .bubble-dots button.on{background:var(--navy)}
+}
+@media (prefers-reduced-motion: reduce){
+  .bubble,.bubble.active,.bubble.leaving{transition:none;transform:none;opacity:1;position:static}
+  .bubble-dots{display:none}
+}

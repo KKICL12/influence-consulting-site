@@ -32,6 +32,56 @@ document.addEventListener('DOMContentLoaded', function(){
   }, {threshold: 0.2});
   bubbles.forEach(function(b,i){ b.style.transitionDelay = (i*0.35)+'s'; bio.observe(b); });
 
+
+  // client logos: continuous right-to-left marquee (mirrors the original WordPress carousels)
+  document.querySelectorAll('.logo-grid').forEach(function(grid){
+    var cards = Array.prototype.slice.call(grid.children);
+    var track = document.createElement('div');
+    track.className = 'logo-track';
+    cards.forEach(function(c){ track.appendChild(c); });
+    // duplicate the set once for a seamless loop
+    cards.forEach(function(c){ track.appendChild(c.cloneNode(true)); });
+    var wrap = document.createElement('div');
+    wrap.className = 'logo-marquee';
+    grid.parentNode.insertBefore(wrap, grid);
+    wrap.appendChild(track);
+    grid.remove();
+    // re-observe reveal state so cloned cards show immediately
+    wrap.querySelectorAll('.logo-card').forEach(function(c){ c.classList.add('in'); });
+  });
+
+
+  // client feedback: auto-advancing right-to-left carousel on desktop (mirrors the original site's Client FEEDBACK slider)
+  var bubblesWrap = document.querySelector('.bubbles');
+  if (bubblesWrap && window.matchMedia('(min-width:901px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var bubbles = Array.prototype.slice.call(bubblesWrap.querySelectorAll('.bubble'));
+    var dots = document.createElement('div');
+    dots.className = 'bubble-dots';
+    bubbles.forEach(function(_, i){
+      var d = document.createElement('button');
+      d.type = 'button';
+      d.setAttribute('aria-label', 'Feedback ' + (i + 1));
+      d.addEventListener('click', function(){ go(i); restart(); });
+      dots.appendChild(d);
+    });
+    bubblesWrap.appendChild(dots);
+    var idx = 0, timer = null;
+    function show(i, dir){
+      bubbles.forEach(function(b, j){
+        b.classList.remove('active', 'leaving');
+        if (j === i) b.classList.add('active');
+        else if (dir === 'back' && j === (i + 1) % bubbles.length) b.classList.add('leaving');
+      });
+      Array.prototype.forEach.call(dots.children, function(d, j){ d.classList.toggle('on', j === i); });
+    }
+    function go(i){ var moved = i !== idx; idx = i; show(idx, 'fwd'); if (moved) restart(); }
+    function next(){ var prev = idx; idx = (idx + 1) % bubbles.length; bubbles[prev].classList.add('leaving'); bubbles[prev].classList.remove('active'); show(idx, 'fwd'); }
+    function restart(){ clearInterval(timer); timer = setInterval(next, 6000); }
+    bubblesWrap.addEventListener('mouseenter', function(){ clearInterval(timer); });
+    bubblesWrap.addEventListener('mouseleave', restart);
+    show(0); restart();
+  }
+
   // modals
   document.querySelectorAll('[data-modal]').forEach(function(card){
     card.addEventListener('click', function(){

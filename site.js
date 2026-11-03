@@ -31,6 +31,8 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }, {threshold: 0.2});
   bubbles.forEach(function(b,i){ b.style.transitionDelay = (i*0.35)+'s'; bio.observe(b); });
+  // safety net: never leave testimonials invisible if the observer does not fire
+  setTimeout(function(){ bubbles.forEach(function(b){ b.classList.add('show'); }); }, 2500);
 
 
   // client logos: continuous right-to-left marquee (mirrors the original WordPress carousels)

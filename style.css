@@ -12,6 +12,7 @@
 html{scroll-behavior:smooth}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--font-body);color:var(--ink);line-height:1.6;background:#fff}
+html,body{overflow-x:clip}
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 h1,h2,h3{font-family:var(--font-display);font-weight:500;line-height:1.15;letter-spacing:-.02em}
 h1{font-size:clamp(2.5rem,5.4vw,4.05rem);line-height:1.02;letter-spacing:-.03em}
@@ -68,6 +69,7 @@ nav a:hover{color:var(--navy)}
 
 /* ghost watermark heading */
 .section-head{padding-top:clamp(90px,10vw,150px)}
+.section-head{overflow:hidden}
 .ghost{position:absolute;top:-8px;left:0;font-family:var(--font-display);font-weight:600;
   font-size:clamp(3.4rem,9vw,7.5rem);line-height:1;letter-spacing:-.02em;white-space:nowrap;
   color:transparent;-webkit-text-stroke:1px rgba(12,31,63,.10);pointer-events:none;user-select:none}
@@ -186,6 +188,7 @@ html:not(.js) .card,html:not(.js) .logo-card,html:not(.js) .person,html:not(.js)
 .footer-base{border-top:1px solid rgba(255,255,255,.1);padding:22px 24px;font-size:.85rem}
 
 @media(max-width:900px){
+  .ghost{font-size:2.6rem}
   .hero-grid,.grid-2,.contact-grid,.footer-grid{grid-template-columns:1fr}
   .grid-3{grid-template-columns:1fr}
   .hero{padding:56px 0}

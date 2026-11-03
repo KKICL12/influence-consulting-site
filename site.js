@@ -123,4 +123,5 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }, {threshold: 0.12});
   reveal.forEach(function(el){ rio.observe(el); });
+  setTimeout(function(){ reveal.forEach(function(el){ el.classList.add('in'); }); }, 1400);
 });

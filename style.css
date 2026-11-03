@@ -156,10 +156,11 @@ html:not(.js) .card,html:not(.js) .logo-card,html:not(.js) .person,html:not(.js)
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(8,21,39,.55);display:grid;place-items:center;padding:24px;opacity:0;pointer-events:none;transition:.25s;z-index:100}
 .modal.open{opacity:1;pointer-events:auto}
-.modal-box{background:#fff;border-radius:16px;max-width:640px;width:100%;max-height:82vh;overflow:auto;padding:var(--space-6);position:relative;transform:translateY(14px);transition:.25s}
+.modal-box{position:relative;background:#fff;border-radius:16px;max-width:640px;width:100%;max-height:82vh;overflow:auto;padding:var(--space-6);transform:translateY(14px);transition:.25s}
 .modal.open .modal-box{transform:none}
 .modal-box h3{color:var(--navy);font-size:1.4rem;margin-bottom:14px}
 .modal-close{position:absolute;top:10px;right:10px;width:44px;height:44px;display:grid;place-items:center;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--ink-soft);border-radius:50%}
+.modal-close:hover{background:var(--tint)}
 .modal-close:hover{color:var(--navy)}
 .modal-box p{margin-bottom:12px}
 
@@ -171,7 +172,9 @@ html:not(.js) .card,html:not(.js) .logo-card,html:not(.js) .person,html:not(.js)
 .contact-lines a:hover{color:var(--gold)}
 .contact-form{display:grid;gap:10px;background:var(--tint);border:1px solid var(--line);border-radius:14px;padding:var(--space-4)}
 .contact-form label{font-size:.86rem;font-weight:600;color:var(--navy);margin-top:8px}
-.contact-form input,.contact-form textarea{padding:12px 14px;border:1px solid var(--line);border-radius:8px;font:inherit;background:#fff}
+.contact-form input,.contact-form textarea{width:100%;padding:13px 16px;border:1px solid var(--line);border-radius:10px;font:inherit;background:#fff;color:var(--ink);transition:border-color .2s}
+.contact-form input:hover,.contact-form textarea:hover{border-color:var(--gold-dim)}
+.contact-form label{display:block;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 6px}
 .contact-form input:focus,.contact-form textarea:focus{outline:2px solid var(--gold);border-color:transparent}
 .contact-form .btn{margin-top:16px;justify-self:start;border:none;cursor:pointer}
 
@@ -184,7 +187,10 @@ html:not(.js) .card,html:not(.js) .logo-card,html:not(.js) .person,html:not(.js)
 .site-footer h4{color:#fff;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
 .site-footer a{text-decoration:none}
 .site-footer a:hover{color:#fff}
-.site-footer p{font-size:.95rem;color:var(--mist)}
+.site-footer p{font-size:.95rem;color:#c8c2b8}
+.site-footer p a{color:#c8c2b8}
+.site-footer a:hover{color:#fff}
+.footer-tag{color:#c8c2b8;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
 .footer-base{border-top:1px solid rgba(255,255,255,.1);padding:22px 24px;font-size:.85rem}
 
 @media(max-width:900px){

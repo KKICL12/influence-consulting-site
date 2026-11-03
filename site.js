@@ -52,6 +52,19 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   });
 
+  // mobile nav
+  var toggle=document.querySelector('.nav-toggle');
+  var header=document.querySelector('.site-header');
+  if(toggle){
+    toggle.addEventListener('click', function(){
+      var open=header.classList.toggle('nav-open');
+      toggle.setAttribute('aria-expanded', open?'true':'false');
+    });
+    document.querySelectorAll('nav a').forEach(function(a){
+      a.addEventListener('click', function(){ header.classList.remove('nav-open'); toggle.setAttribute('aria-expanded','false'); });
+    });
+  }
+
   // subtle scroll reveal for cards
   var reveal = document.querySelectorAll('.card, .person, .story, .logo-card');
   var rio = new IntersectionObserver(function(entries){

@@ -67,7 +67,7 @@ nav a:hover{color:#fff}
   -webkit-mask-image:radial-gradient(circle at 50% 50%,#000 60%,rgba(0,0,0,0) 72%);
   mask-image:radial-gradient(circle at 50% 50%,#000 60%,rgba(0,0,0,0) 72%)}
 /* contained fit + slight zoom so the full splash stays inside the circle */
-.drop-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scale(1.15);display:block}
+.drop-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scale(1.15) translateY(4%);display:block}
 .drop-still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 
 /* ghost watermark heading */

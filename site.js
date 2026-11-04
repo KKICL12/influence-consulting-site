@@ -1,90 +1,157 @@
 // Influence Consulting — interactions
 document.addEventListener('DOMContentLoaded', function(){
-  // count-up stats
+
+  // ── count-up stats ──────────────────────────────────────────────
   var counters = document.querySelectorAll('.count');
-  var io = new IntersectionObserver(function(entries){
+  var statObserver = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(!e.isIntersecting) return;
-      var el = e.target; io.unobserve(el);
+      var el = e.target; statObserver.unobserve(el);
       var to = parseInt(el.dataset.to,10)||0;
       var suffix = el.dataset.suffix||'';
       var delim = el.dataset.delimiter||'';
-      var t0 = null, dur = 2000;
+      var t0 = null, dur = 2400;
       function step(ts){
         if(!t0) t0 = ts;
         var p = Math.min((ts-t0)/dur, 1);
         var eased = 1 - Math.pow(1-p, 3);
         var val = Math.round(to * eased);
         el.textContent = (delim ? val.toLocaleString('en-NZ') : val) + suffix;
+        if(p >= 1) el.classList.add('counted');
         if(p < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
     });
-  }, {threshold: 0.4});
-  counters.forEach(function(c){ io.observe(c); });
+  }, {threshold: 0.35});
+  counters.forEach(function(c){ statObserver.observe(c); });
 
-  // speech bubbles reveal (staggered, like the original build-in animation)
-  var bubbles = document.querySelectorAll('.bubble');
-  var bio = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('show'); bio.unobserve(e.target); }
-    });
-  }, {threshold: 0.2});
-  bubbles.forEach(function(b,i){ b.style.transitionDelay = (i*0.35)+'s'; bio.observe(b); });
-  // safety net: never leave testimonials invisible if the observer does not fire
-  setTimeout(function(){ bubbles.forEach(function(b){ b.classList.add('show'); }); }, 2500);
+  // ── client logo tabbed carousel ─────────────────────────────────
+  var clientPanels = document.querySelectorAll('.client-panel');
+  var clientTabs = document.querySelectorAll('.client-tab');
+  var clientDotsWrapper = document.querySelector('.client-dots');
+  var clientAutoTimer = null;
+  var clientIdx = 0;
 
-
-  // client logos: continuous right-to-left marquee (mirrors the original WordPress carousels)
-  document.querySelectorAll('.logo-grid').forEach(function(grid){
-    var cards = Array.prototype.slice.call(grid.children);
-    var track = document.createElement('div');
-    track.className = 'logo-track';
-    cards.forEach(function(c){ track.appendChild(c); });
-    // duplicate the set once for a seamless loop
-    cards.forEach(function(c){ track.appendChild(c.cloneNode(true)); });
-    var wrap = document.createElement('div');
-    wrap.className = 'logo-marquee';
-    grid.parentNode.insertBefore(wrap, grid);
-    wrap.appendChild(track);
-    grid.remove();
-    // re-observe reveal state so cloned cards show immediately
-    wrap.querySelectorAll('.logo-card').forEach(function(c){ c.classList.add('in'); });
-  });
-
-
-  // client feedback: auto-advancing right-to-left carousel on desktop (mirrors the original site's Client FEEDBACK slider)
-  var bubblesWrap = document.querySelector('.bubbles');
-  if (bubblesWrap && window.matchMedia('(min-width:901px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var bubbles = Array.prototype.slice.call(bubblesWrap.querySelectorAll('.bubble'));
-    var dots = document.createElement('div');
-    dots.className = 'bubble-dots';
-    bubbles.forEach(function(_, i){
-      var d = document.createElement('button');
-      d.type = 'button';
-      d.setAttribute('aria-label', 'Feedback ' + (i + 1));
-      d.addEventListener('click', function(){ go(i); restart(); });
-      dots.appendChild(d);
-    });
-    bubblesWrap.appendChild(dots);
-    var idx = 0, timer = null;
-    function show(i, dir){
-      bubbles.forEach(function(b, j){
-        b.classList.remove('active', 'leaving');
-        if (j === i) b.classList.add('active');
-        else if (dir === 'back' && j === (i + 1) % bubbles.length) b.classList.add('leaving');
-      });
-      Array.prototype.forEach.call(dots.children, function(d, j){ d.classList.toggle('on', j === i); });
+  function showClientPanel(i){
+    clientPanels.forEach(function(p, j){ p.classList.toggle('active', j === i); });
+    clientTabs.forEach(function(t, j){ t.classList.toggle('active', j === i); });
+    if(clientDotsWrapper){
+      Array.prototype.forEach.call(clientDotsWrapper.children, function(d, j){ d.classList.toggle('on', j === i); });
     }
-    function go(i){ var moved = i !== idx; idx = i; show(idx, 'fwd'); if (moved) restart(); }
-    function next(){ var prev = idx; idx = (idx + 1) % bubbles.length; bubbles[prev].classList.add('leaving'); bubbles[prev].classList.remove('active'); show(idx, 'fwd'); }
-    function restart(){ clearInterval(timer); timer = setInterval(next, 6000); }
-    bubblesWrap.addEventListener('mouseenter', function(){ clearInterval(timer); });
-    bubblesWrap.addEventListener('mouseleave', restart);
-    show(0); restart();
+    clientIdx = i;
+  }
+  function nextClientPanel(){
+    showClientPanel((clientIdx + 1) % clientPanels.length);
+  }
+  function restartClientTimer(){
+    clearInterval(clientAutoTimer);
+    if(clientPanels.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      clientAutoTimer = setInterval(nextClientPanel, 5000);
+    }
+  }
+  if(clientPanels.length && clientTabs.length){
+    clientTabs.forEach(function(tab, i){
+      tab.addEventListener('click', function(){ showClientPanel(i); restartClientTimer(); });
+    });
+    if(clientDotsWrapper){
+      Array.prototype.forEach.call(clientDotsWrapper.children, function(d, i){
+        d.addEventListener('click', function(){ showClientPanel(i); restartClientTimer(); });
+      });
+    }
+    // hover pauses auto-advance
+    var clientSection = document.querySelector('.client-section');
+    if(clientSection){
+      clientSection.addEventListener('mouseenter', function(){ clearInterval(clientAutoTimer); });
+      clientSection.addEventListener('mouseleave', restartClientTimer);
+    }
+    showClientPanel(0);
+    restartClientTimer();
   }
 
-  // modals
+  // ── programme tabs ──────────────────────────────────────────────
+  var progTabs = document.querySelectorAll('.programme-tab');
+  var progGrids = document.querySelectorAll('#programmes .grid-2');
+  progTabs.forEach(function(tab, i){
+    tab.addEventListener('click', function(){
+      progTabs.forEach(function(t){ t.classList.remove('active'); });
+      tab.classList.add('active');
+      progGrids.forEach(function(g, j){ g.classList.toggle('active', j === i); });
+    });
+  });
+  // Default: show first programme grid
+  if(progTabs.length && progGrids.length){
+    progTabs[0].classList.add('active');
+    progGrids[0].classList.add('active');
+  }
+
+  // ── testimonial carousel ────────────────────────────────────────
+  var bubbles = document.querySelectorAll('.bubble');
+  var dotsEl = document.querySelector('.bubble-dots');
+  var prevBtn = document.querySelector('.bubble-prev');
+  var nextBtn = document.querySelector('.bubble-next');
+  var bubbleIdx = 0;
+  var bubbleTimer = null;
+
+  function showBubble(i){
+    bubbles.forEach(function(b, j){
+      b.classList.remove('active', 'leaving');
+      if(j === i) b.classList.add('active');
+      else if(j === (i + 1) % bubbles.length || (i === bubbles.length - 1 && j === 0)){
+        // the one being replaced — give it a leaving class so it can fade out opposite direction
+      }
+    });
+    bubbleIdx = i;
+    if(dotsEl){
+      Array.prototype.forEach.call(dotsEl.children, function(d, j){ d.classList.toggle('on', j === i); });
+    }
+  }
+  function nextBubble(){
+    var prev = bubbleIdx;
+    bubbleIdx = (bubbleIdx + 1) % bubbles.length;
+    bubbles[prev].classList.remove('active');
+    bubbles[prev].classList.add('leaving');
+    // after the leave transition, remove the leaving class
+    setTimeout((function(p){ return function(){ p.classList.remove('leaving'); }; })(bubbles[prev]), 500);
+    bubbles[bubbleIdx].classList.add('active');
+    if(dotsEl){
+      Array.prototype.forEach.call(dotsEl.children, function(d, j){ d.classList.toggle('on', j === bubbleIdx); });
+    }
+  }
+  function prevBubble(){
+    var cur = bubbleIdx;
+    bubbleIdx = (bubbleIdx - 1 + bubbles.length) % bubbles.length;
+    bubbles[cur].classList.remove('active');
+    bubbles[cur].classList.add('leaving');
+    setTimeout((function(p){ return function(){ p.classList.remove('leaving'); }; })(bubbles[cur]), 500);
+    bubbles[bubbleIdx].classList.add('active');
+    if(dotsEl){
+      Array.prototype.forEach.call(dotsEl.children, function(d, j){ d.classList.toggle('on', j === bubbleIdx); });
+    }
+  }
+  function restartBubbleTimer(){
+    clearInterval(bubbleTimer);
+    if(bubbles.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      bubbleTimer = setInterval(nextBubble, 6000);
+    }
+  }
+  if(bubbles.length){
+    if(prevBtn) prevBtn.addEventListener('click', function(){ prevBubble(); restartBubbleTimer(); });
+    if(nextBtn) nextBtn.addEventListener('click', function(){ nextBubble(); restartBubbleTimer(); });
+    if(dotsEl){
+      Array.prototype.forEach.call(dotsEl.children, function(d, i){
+        d.addEventListener('click', function(){ showBubble(i); restartBubbleTimer(); });
+      });
+    }
+    var bubbleWrapper = document.querySelector('.bubbles-wrapper');
+    if(bubbleWrapper){
+      bubbleWrapper.addEventListener('mouseenter', function(){ clearInterval(bubbleTimer); });
+      bubbleWrapper.addEventListener('mouseleave', restartBubbleTimer);
+    }
+    showBubble(0);
+    restartBubbleTimer();
+  }
+
+  // ── modals ──────────────────────────────────────────────────────
   document.querySelectorAll('[data-modal]').forEach(function(card){
     card.addEventListener('click', function(){
       var m = document.getElementById(card.dataset.modal);
@@ -104,12 +171,12 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   });
 
-  // mobile nav
-  var toggle=document.querySelector('.nav-toggle');
-  var header=document.querySelector('.site-header');
+  // ── mobile nav ──────────────────────────────────────────────────
+  var toggle = document.querySelector('.nav-toggle');
+  var header = document.querySelector('.site-header');
   if(toggle){
     toggle.addEventListener('click', function(){
-      var open=header.classList.toggle('nav-open');
+      var open = header.classList.toggle('nav-open');
       toggle.setAttribute('aria-expanded', open?'true':'false');
     });
     document.querySelectorAll('nav a').forEach(function(a){
@@ -117,13 +184,14 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
-  // subtle scroll reveal for cards
-  var reveal = document.querySelectorAll('.card, .person, .story, .logo-card');
+  // ── subtle scroll reveal for cards, people, stories ─────────────
+  var reveal = document.querySelectorAll('.person, .story, .logo-card');
   var rio = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting){ e.target.classList.add('in'); rio.unobserve(e.target); }
     });
   }, {threshold: 0.12});
   reveal.forEach(function(el){ rio.observe(el); });
+  // safety net
   setTimeout(function(){ reveal.forEach(function(el){ el.classList.add('in'); }); }, 1400);
 });

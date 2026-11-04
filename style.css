@@ -234,6 +234,9 @@ html:not(.js) .card,html:not(.js) .logo-card,html:not(.js) .person,html:not(.js)
   .hero-grid,.grid-2,.contact-grid,.footer-grid{grid-template-columns:1fr}
   .grid-3{grid-template-columns:1fr}
   .hero{padding:40px 0 56px}
+  .hero-ripple{min-height:200px}
+  .ripple-container{width:200px;height:240px}
+  @keyframes rippleOut{0%{width:20px;height:20px;margin-left:-10px;margin-top:-10px;opacity:.9;border-color:var(--gold)}100%{width:180px;height:180px;margin-left:-90px;margin-top:-90px;opacity:0;border-color:rgba(193,154,61,.15)}}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .logo-grid{grid-template-columns:repeat(3,1fr)}
   .bubble{position:relative;max-width:100%;transform:none;opacity:1}

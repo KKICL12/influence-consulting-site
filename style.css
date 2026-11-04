@@ -68,28 +68,11 @@ nav a:hover{color:#fff}
   -webkit-mask-image:radial-gradient(circle at 50% 50%,#000 66%,rgba(0,0,0,0) 74%);
   mask-image:radial-gradient(circle at 50% 50%,#000 66%,rgba(0,0,0,0) 74%)}
 
-/* Water drop + ripple animation */
-.hero-ripple{min-height:340px}
-.ripple-container{position:relative;width:280px;height:320px;display:flex;align-items:center;justify-content:center}
-
-.water-drop{position:absolute;width:18px;height:22px;background:radial-gradient(ellipse at 50% 70%,rgba(232,215,174,.95),rgba(193,154,61,.7));border-radius:50% 50% 50% 50% / 40% 40% 60% 60%;z-index:5;opacity:0;animation:dropAppear .6s ease-out .2s forwards}
-.water-drop::after{content:"";position:absolute;top:-6px;left:5px;width:8px;height:10px;background:radial-gradient(ellipse at 50% 40%,rgba(255,255,255,.6),transparent);border-radius:50%}
-
-@keyframes dropAppear{0%{opacity:0;transform:translateY(-60px)}100%{opacity:1;transform:translateY(0)}}
-
-.ripple{position:absolute;top:50%;left:50%;width:20px;height:20px;margin-left:-10px;margin-top:-10px;border-radius:50%;border:1.5px solid var(--gold);opacity:0;pointer-events:none}
-
-.r1{animation:rippleOut 3s ease-out .8s infinite}
-.r2{animation:rippleOut 3s ease-out 1.35s infinite}
-.r3{animation:rippleOut 3s ease-out 1.9s infinite}
-.r4{animation:rippleOut 3s ease-out 2.45s infinite}
-
-@keyframes rippleOut{0%{width:20px;height:20px;margin-left:-10px;margin-top:-10px;opacity:.9;border-color:var(--gold)}100%{width:260px;height:260px;margin-left:-130px;margin-top:-130px;opacity:0;border-color:rgba(193,154,61,.15)}}
-
-/* subtle blue water highlight on the ripple area, like the old globe glow */
-.hero-ripple::after{content:"";position:absolute;inset:10%;background:radial-gradient(circle at 50% 50%,rgba(96,160,196,.18),rgba(96,160,196,0) 70%);pointer-events:none;border-radius:50%;animation:waterGlow 4s ease-in-out infinite alternate}
-
-@keyframes waterGlow{0%{opacity:.5;transform:scale(.95)}100%{opacity:1;transform:scale(1.05)}}
+/* Photo-real water drop video, circular and blended into the navy like the globe */
+.hero-drop::before{content:"";position:absolute;inset:-12%;background:radial-gradient(circle at 50% 50%,rgba(96,160,196,.22),rgba(96,160,196,0) 62%);pointer-events:none}
+.drop-video{width:100%;max-width:520px;aspect-ratio:1/1;object-fit:cover;object-position:50% 55%;display:block;border-radius:50%;position:relative;background:var(--navy-deep);
+  -webkit-mask-image:radial-gradient(circle at 50% 50%,#000 60%,rgba(0,0,0,0) 72%);
+  mask-image:radial-gradient(circle at 50% 50%,#000 60%,rgba(0,0,0,0) 72%)}
 
 /* ghost watermark heading */
 .section-head{padding-top:clamp(90px,10vw,150px)}
@@ -241,9 +224,7 @@ html:not(.js) .card,html:not(.js) .logo-card,html:not(.js) .person,html:not(.js)
   .hero-grid,.grid-2,.contact-grid,.footer-grid{grid-template-columns:1fr}
   .grid-3{grid-template-columns:1fr}
   .hero{padding:40px 0 56px}
-  .hero-ripple{min-height:200px}
-  .ripple-container{width:200px;height:240px}
-  @keyframes rippleOut{0%{width:20px;height:20px;margin-left:-10px;margin-top:-10px;opacity:.9;border-color:var(--gold)}100%{width:180px;height:180px;margin-left:-90px;margin-top:-90px;opacity:0;border-color:rgba(193,154,61,.15)}}
+  .drop-video{max-width:300px;margin:0 auto}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .logo-grid{grid-template-columns:repeat(3,1fr)}
   .bubble{position:relative;max-width:100%;transform:none;opacity:1}

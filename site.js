@@ -184,6 +184,10 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
+  // ── hero video: honour reduced motion (poster frame only)
+  var dv=document.querySelector('.drop-video');
+  if(dv && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ dv.removeAttribute('autoplay'); dv.pause(); }
+
   // ── subtle scroll reveal for cards, people, stories ─────────────
   var reveal = document.querySelectorAll('.person, .story, .logo-card');
   var rio = new IntersectionObserver(function(entries){

@@ -45,7 +45,7 @@
     </div>
     <div class="hero-media hero-drop">
       <div class="drop-frame"><video class="drop-video" autoplay muted loop playsinline preload="auto" poster="assets/hero-contact.jpg" aria-hidden="true">
-        <source src="assets/hero-drop.mp4#t=0,2.5" type="video/mp4">
+        <source src="assets/hero-drop.mp4" type="video/mp4">
       </video></div>
     </div>
     </div></section><section class="section"><div class="wrap contact-grid">
@@ -55,7 +55,10 @@
     <div><h4>Our Phone</h4><a href="tel:+6493030430">+64 9 303 0430</a></div>
   </div>
 </div>
-<form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+<form class="contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY">
+  <input type="hidden" name="subject" value="Influence Consulting – Contact Form Submission">
+  <input type="hidden" name="from_name" value="Influence Consulting Website">
   <label for="cf-name">Full Name</label>
   <input id="cf-name" type="text" name="name" required>
   <label for="cf-email">Email Address</label>
@@ -63,9 +66,10 @@
   <label for="cf-phone">Phone Number</label>
   <input id="cf-phone" type="tel" name="phone" pattern="[0-9()#&+*-=.]+">
   <label for="cf-message">Message</label>
-  <textarea id="cf-message" name="message" rows="7"></textarea>
-  <button type="submit" class="btn">Submit</button>
+  <textarea id="cf-message" name="message" rows="7" required></textarea>
+  <button type="submit" class="btn">Submit →</button>
 </form>
+<p id="form-status" style="margin-top:16px;font-weight:600;display:none"></p>
 </div></section></main>
 
 <footer class="site-footer">

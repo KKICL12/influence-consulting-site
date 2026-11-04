@@ -188,7 +188,26 @@ document.addEventListener('DOMContentLoaded', function(){
   var dv=document.querySelector('.drop-video');
   if(dv && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ dv.removeAttribute('autoplay'); dv.pause(); }
 
-  // ── hero loop segments: seamlessly loop media-fragment range (#t=start,end)
+  // ── contact form ───────────────────────────────────────────────
+  var cf = document.getElementById('contact-form');
+  var fs = document.getElementById('form-status');
+  if(cf && fs){
+    cf.addEventListener('submit', function(e){
+      e.preventDefault();
+      fs.textContent='Sending…';
+      fs.style.display='block';
+      fs.style.color='var(--ink-soft)';
+      var fd = new FormData(cf);
+      fetch(cf.action,{method:'POST',body:fd})
+        .then(function(r){
+          if(r.ok){ fs.textContent='Thanks! We\'ll be in touch shortly.'; fs.style.color='var(--gold-ink)'; cf.reset(); }
+          else{ return r.text().then(function(t){ throw new Error(t||'Submission failed'); }); }
+        })
+        .catch(function(err){ fs.textContent='Sorry, something went wrong. Please email us directly.'; fs.style.color='#c0392b'; console.error(err); });
+    });
+  }
+
+  // ── hero loop segments: seamlessly loop media-fragment range (#t,start,end)
   document.querySelectorAll('video.drop-video').forEach(function(v){
     var src=v.currentSrc||'';
     if(!src){ var s=v.querySelector('source'); if(s) src=s.getAttribute('src')||''; }

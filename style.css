@@ -26,6 +26,8 @@ p{color:var(--ink-soft)}
 .btn{display:inline-flex;align-items:center;background:transparent;color:#fff;padding:13px 28px;border-radius:999px;text-decoration:none;font-weight:600;font-size:.98rem;letter-spacing:.01em;transition:.2s;border:1.5px solid rgba(193,154,61,.55)}
 .btn::after{content:" \2192";font-weight:500;margin-left:6px}
 .btn:hover{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
+.btn-gold{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
+.btn-gold:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
 .btn-sm{padding:9px 20px;font-size:.9rem;border-color:rgba(193,154,61,.45)}
 .btn-sm::after{content:""}
 .textlink{color:var(--navy);font-weight:600;text-decoration:none}

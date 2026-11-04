@@ -188,6 +188,16 @@ document.addEventListener('DOMContentLoaded', function(){
   var dv=document.querySelector('.drop-video');
   if(dv && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ dv.removeAttribute('autoplay'); dv.pause(); }
 
+  // ── hero loop segments: restart at media-fragment start if a browser wraps to 0
+  document.querySelectorAll('video.drop-video').forEach(function(v){
+    var src=v.currentSrc||'';
+    if(!src){ var s=v.querySelector('source'); if(s) src=s.getAttribute('src')||''; }
+    var m=/(?:[#&?]t=)([\d.]+)/.exec(src);
+    if(m){ var start=parseFloat(m[1]);
+      if(start>0){ v.addEventListener('timeupdate',function(){ if(v.currentTime+0.05<start){ try{ v.currentTime=start; }catch(e){} } }); }
+    }
+  });
+
   // ── subtle scroll reveal for cards, people, stories ─────────────
   var reveal = document.querySelectorAll('.person, .story, .logo-card');
   var rio = new IntersectionObserver(function(entries){

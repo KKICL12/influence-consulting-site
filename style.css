@@ -36,7 +36,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 /* header */
 .site-header{position:sticky;top:0;background:var(--navy-deep);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08);z-index:50;transition:background .35s ease}
 .nav-row{display:flex;align-items:center;justify-content:space-between;height:76px;gap:16px}
-.brand-logo{height:42px;display:block;filter:brightness(10)}
+.brand-logo{height:34px;width:auto;display:block}
 .brand-tag{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-soft)}
 .brand{font-family:var(--font-body);font-size:1.35rem;text-decoration:none;color:#fff;font-weight:600}
 .brand span{color:var(--gold);font-weight:400}
@@ -61,6 +61,12 @@ nav a:hover{color:#fff}
 .hero-link a{color:var(--gold-soft);font-weight:600;text-decoration:none;font-size:1.02rem}
 .hero-link a:hover{color:#fff}
 .hero-media{position:relative;display:flex;align-items:center;justify-content:center}
+/* inner-page hero: circular photo-real globe/map, blended into the navy */
+.hero-globe::before{content:"";position:absolute;inset:-12%;background:radial-gradient(circle at 50% 50%,rgba(96,160,196,.28),rgba(96,160,196,0) 62%);pointer-events:none}
+.hero-globe img{width:100%;max-width:520px;aspect-ratio:1/1;object-fit:cover;display:block;border-radius:50%;mix-blend-mode:screen;position:relative;
+  filter:contrast(1.06) saturate(1.08);
+  -webkit-mask-image:radial-gradient(circle at 50% 50%,#000 66%,rgba(0,0,0,0) 74%);
+  mask-image:radial-gradient(circle at 50% 50%,#000 66%,rgba(0,0,0,0) 74%)}
 
 /* Water drop + ripple animation */
 .hero-ripple{min-height:340px}
@@ -212,7 +218,8 @@ html:not(.js) .card,html:not(.js) .logo-card,html:not(.js) .person,html:not(.js)
 .contact-form input:hover,.contact-form textarea:hover{border-color:var(--gold-dim)}
 .contact-form label{display:block;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 6px}
 .contact-form input:focus,.contact-form textarea:focus{outline:2px solid var(--gold);border-color:transparent}
-.contact-form .btn{margin-top:16px;justify-self:start;border:none;cursor:pointer}
+.contact-form .btn{margin-top:16px;justify-self:start;border:none;cursor:pointer;background:var(--navy);color:#fff}
+.contact-form .btn:hover{background:var(--gold);color:var(--navy-deep)}
 
 /* footer */
 .site-footer{background:var(--navy-deep);color:var(--mist);padding:var(--space-8) 0 0}

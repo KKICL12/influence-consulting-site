@@ -188,13 +188,23 @@ document.addEventListener('DOMContentLoaded', function(){
   var dv=document.querySelector('.drop-video');
   if(dv && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ dv.removeAttribute('autoplay'); dv.pause(); }
 
-  // ── hero loop segments: restart at media-fragment start if a browser wraps to 0
+  // ── hero loop segments: seamlessly loop media-fragment range (#t=start,end)
   document.querySelectorAll('video.drop-video').forEach(function(v){
     var src=v.currentSrc||'';
     if(!src){ var s=v.querySelector('source'); if(s) src=s.getAttribute('src')||''; }
-    var m=/(?:[#&?]t=)([\d.]+)/.exec(src);
-    if(m){ var start=parseFloat(m[1]);
-      if(start>0){ v.addEventListener('timeupdate',function(){ if(v.currentTime+0.05<start){ try{ v.currentTime=start; }catch(e){} } }); }
+    var m=/#t=([\d.]*)(?:,([\d.]+))?/.exec(src);
+    if(m){
+      var segStart=m[1]?parseFloat(m[1]):0;
+      var segEnd=m[2]?parseFloat(m[2]):null;
+      if(segEnd!==null){
+        v.addEventListener('timeupdate',function(){
+          if(v.currentTime>=segEnd||(v.currentTime+0.05<segStart)){
+            try{ v.currentTime=segStart; }catch(e){}
+          }
+        });
+        // also catch 'ended' in case the browser fires it at the fragment boundary
+        v.addEventListener('ended',function(e){ e.preventDefault(); try{ v.currentTime=segStart; v.play(); }catch(x){} });
+      }
     }
   });
 

@@ -24,6 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -69,6 +70,7 @@
   <input id="cf-phone" type="tel" name="phone" pattern="[0-9()#&+*-=.]+">
   <label for="cf-message">Message</label>
   <textarea id="cf-message" name="message" rows="7" required></textarea>
+  <div class="cf-turnstile" data-sitekey="0x4AAAAAAF5FMsAHR5Y9ETuD" style="margin-bottom: 16px;"></div>
   <button type="submit" class="btn">Submit</button>
 </form>
 <p id="form-status" style="margin-top:16px;font-weight:600;display:none"></p>

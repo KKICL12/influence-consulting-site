@@ -105,6 +105,10 @@ nav a:hover{color:#fff}
 .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:36px}
 #programmes .grid-2{counter-reset:prog;display:none}
 #programmes .grid-2.active{display:grid}
+.grid-1{display:grid;grid-template-columns:1fr;gap:24px;margin-top:36px}
+#programmes .grid-1{counter-reset:prog;display:none}
+#programmes .grid-1.active{display:grid}
+@media(min-width:901px){#programmes .grid-1{max-width:50%}}
 #programmes .card{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:calc(var(--space-4) + 8px);transition:.25s;opacity:1;transform:none}
 #programmes .card::before{counter-increment:prog;content:counter(prog,decimal-leading-zero);position:absolute;top:18px;right:24px;font-family:var(--font-display);font-size:.95rem;letter-spacing:.06em;color:var(--gold-ink);opacity:.85}
 #programmes .card{border-top:2px solid rgba(193,154,61,.45)}

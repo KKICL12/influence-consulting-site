@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // ── programme tabs ──────────────────────────────────────────────
   var progTabs = document.querySelectorAll('.programme-tab');
-  var progGrids = document.querySelectorAll('#programmes .grid-2');
+  var progGrids = document.querySelectorAll('#programmes .grid-2, #programmes .grid-1');
   progTabs.forEach(function(tab, i){
     tab.addEventListener('click', function(){
       progTabs.forEach(function(t){ t.classList.remove('active'); });

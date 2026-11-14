@@ -216,13 +216,20 @@ document.addEventListener('DOMContentLoaded', function(){
       var segStart=m[1]?parseFloat(m[1]):0;
       var segEnd=m[2]?parseFloat(m[2]):null;
       if(segEnd!==null){
+        // strip fragment from source so browser doesn't interfere
+        function cleanSrc(u){ return u.replace(/#t=[^#]*/,''); }
+        var sourceEl=v.querySelector('source');
+        if(sourceEl && /#t=/.test(sourceEl.getAttribute('src'))){
+          sourceEl.setAttribute('src',cleanSrc(sourceEl.getAttribute('src')));
+          v.load();
+        }
+        v.addEventListener('loadedmetadata',function(){ v.currentTime=segStart; },{once:true});
         v.addEventListener('timeupdate',function(){
           if(v.currentTime>=segEnd||(v.currentTime+0.05<segStart)){
             try{ v.currentTime=segStart; }catch(e){}
           }
         });
-        // also catch 'ended' in case the browser fires it at the fragment boundary
-        v.addEventListener('ended',function(e){ e.preventDefault(); try{ v.currentTime=segStart; v.play(); }catch(x){} });
+        v.addEventListener('ended',function(e){ e.preventDefault(); try{ v.currentTime=segStart; v.play().catch(function(){}); }catch(x){} });
       }
     }
   });

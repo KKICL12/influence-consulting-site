@@ -88,8 +88,8 @@ nav a:hover{color:#fff}
 .stats::before{content:"";position:absolute;inset:0;opacity:.08;pointer-events:none;
   background-image:radial-gradient(rgba(232,215,174,.85) 1px,transparent 1.5px);background-size:20px 20px}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-3);text-align:center}
-.stats strong{display:block;font-family:var(--font-body);font-weight:600;font-size:clamp(2.2rem,4vw,3.1rem);line-height:1;letter-spacing:-.02em;color:var(--gold-soft);transition:color .3s}
-.stats strong.counted{color:var(--gold-bright)}
+.stats strong{display:block;font-family:var(--font-body);font-weight:600;font-size:clamp(2.2rem,4vw,3.1rem);line-height:1;letter-spacing:-.02em;color:#fb983a;transition:color .3s}
+.stats strong.counted{color:#fb983a}
 .stats span{font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(232,215,174,.75);display:block;margin-top:4px}
 
 /* sections */

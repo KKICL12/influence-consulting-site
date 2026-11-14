@@ -226,6 +226,7 @@ html:not(.js) .card,html:not(.js) .logo-card,html:not(.js) .person,html:not(.js)
   .bubble-dots{margin-top:20px}
   .bubbles-wrapper{min-height:auto}
   .brand-tag{display:none}
+  .programme-tab{font-size:.7rem;padding:8px 16px;letter-spacing:.08em}
   .nav-toggle{display:flex}
   nav{position:fixed;top:76px;left:0;right:0;background:var(--navy-deep);flex-direction:column;align-items:stretch;gap:0;padding:8px 24px 20px;border-bottom:1px solid rgba(255,255,255,.1);box-shadow:0 16px 30px rgba(0,0,0,.35);transform:translateY(-12px);opacity:0;pointer-events:none;transition:.25s;z-index:49}
   .nav-open nav{transform:none;opacity:1;pointer-events:auto}

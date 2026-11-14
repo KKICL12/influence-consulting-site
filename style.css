@@ -57,18 +57,12 @@ nav a:hover{color:#fff}
 .hero .eyebrow{color:var(--gold-soft)}
 .hero h1{color:#fff;max-width:18ch}
 .hero .lede{color:rgba(232,215,174,.85);margin-top:18px}
-.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(32px,4vw,56px);align-items:center;position:relative;z-index:1}
-@media (min-width:1000px){.hero-media{width:min(620px,58vw);margin-right:calc(-1 * clamp(0px,10vw,150px))}}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:clamp(32px,4vw,56px);align-items:center;position:relative;z-index:1}
 .hero-link{margin-top:var(--space-4)}
 .hero-link a{color:var(--gold-soft);font-weight:600;text-decoration:none;font-size:1.02rem}
 .hero-link a:hover{color:#fff}
-.hero-media{position:relative;display:flex;align-items:center;justify-content:center}
-.drop-frame{width:100%;max-width:520px;aspect-ratio:1/1;border-radius:50%;overflow:hidden;position:relative;background:var(--navy-deep);
-  -webkit-mask-image:radial-gradient(circle at 50% 50%,#000 60%,rgba(0,0,0,0) 72%);
-  mask-image:radial-gradient(circle at 50% 50%,#000 60%,rgba(0,0,0,0) 72%)}
-/* cover fit: water fills the circle; 4% down-shift keeps the splash crown fully inside */
-.drop-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:translateY(4%);display:block}
-.drop-still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero-scrim{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,var(--navy-deep) 0%,var(--navy) 40%,var(--navy-hi) 100%);opacity:.62}
 
 /* ghost watermark heading */
 .section-head{padding-top:clamp(90px,10vw,150px)}
@@ -223,7 +217,7 @@ html:not(.js) .card,html:not(.js) .logo-card,html:not(.js) .person,html:not(.js)
   .hero-grid,.grid-2,.contact-grid,.footer-grid{grid-template-columns:1fr}
   .grid-3{grid-template-columns:1fr}
   .hero{padding:40px 0 56px}
-  .drop-frame{max-width:300px;margin:0 auto}
+
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .logo-grid{grid-template-columns:repeat(3,1fr)}
   .bubble{position:relative;max-width:100%;transform:none;opacity:1}

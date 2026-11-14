@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   // ── hero video: honour reduced motion (poster frame only)
-  var dv=document.querySelector('.drop-video');
+  var dv=document.querySelector('.hero-bg');
   if(dv && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ dv.removeAttribute('autoplay'); dv.pause(); }
 
   // ── contact form ───────────────────────────────────────────────
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   // ── hero loop segments: seamlessly loop media-fragment range (#t,start,end)
-  document.querySelectorAll('video.drop-video').forEach(function(v){
+  document.querySelectorAll('video.hero-bg').forEach(function(v){
     var src=v.currentSrc||'';
     if(!src){ var s=v.querySelector('source'); if(s) src=s.getAttribute('src')||''; }
     var m=/#t=([\d.]*)(?:,([\d.]+))?/.exec(src);

@@ -1,7 +1,7 @@
 /* design tokens: the only ad-hoc colour values in this file should be inside this block */
 :root{
-  --ink:#2b2925; --ink-soft:#5f5a51; --navy:#0c1f3f; --navy-deep:#081527; --navy-hi:#15335c;
-  --navy-mid:#0e2648;
+  --ink:#2b2925; --ink-soft:#5f5a51; --navy:#203a6b; --navy-deep:#132a4f; --navy-hi:#32527f;
+  --navy-mid:#1d3a6b;
   --gold:#c19a3d; --gold-ink:#8a6a24; --gold-soft:#e8d7ae; --gold-bright:#d4a843; --tint:#f6f4ef; --line:#e7e2d8;
   --space-2:16px; --space-3:24px; --space-4:32px; --space-6:48px; --space-8:64px; --space-12:96px;
   --font-display:"Fraunces",Georgia,serif; --font-body:"Inter",-apple-system,sans-serif;

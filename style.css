@@ -28,7 +28,7 @@ p{color:var(--ink-soft)}
 .btn:hover{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
 .btn-gold{background:transparent;color:var(--gold);border-color:transparent}
 .btn-gold:hover{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
-.btn-sm{padding:9px 20px;font-size:.9rem;border-color:rgba(193,154,61,.45)}
+.btn-sm{padding:9px 20px;font-size:.9rem;border-color:transparent}
 .btn-sm::after{content:""}
 .textlink{color:var(--navy);font-weight:600;text-decoration:none}
 .textlink:hover{color:var(--gold-ink)}
